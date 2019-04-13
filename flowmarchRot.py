@@ -14,7 +14,7 @@ def normalize255(input):
         normalizedOutput = 255
     return int(normalizedOutput)
 
-im = Image.open("Heightmap.jpg")
+im = Image.open("Heightmap.png")
 im = im.convert("L")
 
 uSteps = im.size[0]
@@ -25,9 +25,13 @@ stepLossRate = 1
 materialDensity = .5
 rSteps = 150
 
+# START TIMING
+import time
+startTime = time.time()
+
 # we need to generate a list of U,V tuples to pass to the drawing board
 draw = ImageDraw.Draw(im)
-    
+
 for column in range(0,uSteps):
     startUV = (int(uSteps/2),1)
 
@@ -92,6 +96,9 @@ for column in range(0,uSteps):
 del draw
 
 print("Flowmarch Completed!")
+endTime = time.time()
+
+print("Time elapsed: {} seconds".format('%.2f'%(endTime - startTime)))
 
 # write to stdout
 im.save("Flow_Loss_" + str(stepLossRate) + "_matDensity_" + str(materialDensity) + ".png", "PNG")
